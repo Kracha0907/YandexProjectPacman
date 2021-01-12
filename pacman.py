@@ -14,6 +14,7 @@ class Pacman:
         self.image = pygame.image.load(os.path.join(sprites_folder, "+y_ship"))
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.check_a = 'up'
+        self.check_last = 'up'
 
     def go_up(self, sprite):
         next_x, next_y = self.get_position()
@@ -24,6 +25,7 @@ class Pacman:
             self.image = pygame.image.load(os.path.join(sprites_folder, sprite))
             self.image = pygame.transform.scale(self.image, (100, 100))
             self.set_center(x, y - TILE_SIZE)
+            self.check_last = 'up'
             return 1
         else:
             return 2
@@ -37,6 +39,7 @@ class Pacman:
             self.image = pygame.image.load(os.path.join(sprites_folder, sprite))
             self.image = pygame.transform.scale(self.image, (100, 100))
             self.set_center(x, y + TILE_SIZE)
+            self.check_last = 'down'
             return 1
         else:
             return 2
@@ -50,6 +53,7 @@ class Pacman:
             self.image = pygame.image.load(os.path.join(sprites_folder, sprite))
             self.image = pygame.transform.scale(self.image, (100, 100))
             self.set_center(x - TILE_SIZE, y)
+            self.check_last = 'left'
             return 1
         else:
             return 2
@@ -63,6 +67,7 @@ class Pacman:
             self.image = pygame.image.load(os.path.join(sprites_folder, sprite))
             self.image = pygame.transform.scale(self.image, (100, 100))
             self.set_center(x + TILE_SIZE, y)
+            self.check_last = 'right'
             return 1
         else:
             return 2
@@ -70,13 +75,21 @@ class Pacman:
     def update_hero(self):
         next_x, next_y = self.get_position()
         if self.check_a == 'up':
-            self.go_up("+y_ship")
+            go_event = self.go_up("+y_ship")
+            if go_event == 2:
+                self.check_a = self.check_last
         elif self.check_a == 'right':
-            self.go_right("+x_ship")
+            go_event = self.go_right("+x_ship")
+            if go_event == 2:
+                self.check_a = self.check_last
         elif self.check_a == 'down':
-            self.go_down("-y_ship")
+            go_event = self.go_down("-y_ship")
+            if go_event == 2:
+                self.check_a = self.check_last
         elif self.check_a == 'left':
-            self.go_left("-x_ship")
+            go_event = self.go_left("-x_ship")
+            if go_event == 2:
+                self.check_a = self.check_last
 
     def get_position(self):
         return self.x, self.y
