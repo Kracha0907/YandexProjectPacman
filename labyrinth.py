@@ -1,6 +1,7 @@
 import pygame
+import os
 
-from config import TILE_SIZE
+from config import TILE_SIZE, sprites_folder
 
 
 class Labyrinth:
@@ -8,7 +9,8 @@ class Labyrinth:
         self.map = []
         with open(f"{filename}") as input_file:
             for line in input_file:
-                self.map.append(list(map(int, line.split())))
+                self.map.append(list(map(str, line.split())))
+                print(self.map)
         self.height = len(self.map)
         self.width = len(self.map[0])
         self.tile_size = TILE_SIZE
@@ -16,12 +18,26 @@ class Labyrinth:
         self.finish_tile = finish_tile
 
     def render(self, screen):
-        colors = {0: (0, 0, 0), 1: (100, 100, 255), 2: (230, 60, 60)}
+        colors = {'0': (0, 0, 0), '1': (100, 100, 255), '2': (230, 60, 60)}
         for y in range(self.height):
             for x in range(self.width):
                 rect = pygame.Rect(x * self.tile_size, y * self.tile_size,
                                    self.tile_size, self.tile_size)
-                screen.fill(colors[self.get_tile_id((x, y))], rect)
+                if self.get_tile_id((x, y)).isdigit():
+                    screen.fill(colors[self.get_tile_id((x, y))], rect)
+                elif self.get_tile_id((x, y)) == 'E':
+                    screen.fill(colors['0'], rect)
+                    self.center = x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5, y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5
+                    self.image = pygame.image.load(os.path.join(sprites_folder, "blue_star.png"))
+                    self.image = pygame.transform.scale(self.image, (80, 60))
+                    screen.blit(self.image, self.center)
+                elif self.get_tile_id((x, y)) == 'A':
+                    screen.fill(colors['0'], rect)
+                    self.center = x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5, y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5
+                    self.image = pygame.image.load(os.path.join(sprites_folder, "artifact.png"))
+                    self.image = pygame.transform.scale(self.image, (80, 60))
+                    screen.blit(self.image, self.center)
+
 
     def get_tile_id(self, position):
         return self.map[position[1]][position[0]]
