@@ -5,6 +5,7 @@ from game import Game
 from ghost import Ghost
 from labyrinth import Labyrinth
 from pacman import Pacman
+from energy_life import EnergyLife
 
 
 def main():
@@ -15,6 +16,7 @@ def main():
     pacman = Pacman((6, 6), labyrinth)
     ghost = Ghost((1, 1), labyrinth)
     game = Game(labyrinth, pacman, ghost)
+    energy_life = EnergyLife(screen, pacman)
 
     clock = pygame.time.Clock()
     run = True
@@ -31,10 +33,15 @@ def main():
                     pacman.check_a = 'up'
                 elif event.key == pygame.K_s:
                     pacman.check_a = 'down'
+        rect_pacman = pacman.x, pacman.y
+        rect_ghost = ghost.x, ghost.y
+        if rect_ghost == rect_pacman and pacman.health > 0:
+            pacman.health -= 20
         pacman.update_hero()
         ghost.update_hero()
         screen.fill((0, 0, 0))
         game.render(screen)
+        energy_life.render(pacman)
         pygame.display.flip()
         clock.tick(FPS)
     pygame.quit()
