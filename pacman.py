@@ -15,6 +15,9 @@ class Pacman:
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.check_a = 'up'
         self.check_last = 'up'
+        self.health = 100
+        self.energy = 0
+        self.artifacts = 0
 
     def go_up(self, sprite):
         next_x, next_y = self.get_position()
