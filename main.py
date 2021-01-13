@@ -45,9 +45,9 @@ def main():
         if labyrinth.map[rect_pacman[1]][rect_pacman[0]] == 'A' and pacman.energy < 100:
             pacman.artifacts += 1
             labyrinth.map[rect_pacman[1]][rect_pacman[0]] = '0'
+        screen.blit(labyrinth.background, (0, 0))
         pacman.update_hero()
         ghost.update_hero()
-        screen.fill((0, 0, 0))
         game.render(screen)
         artifacts_rend.render(pacman.artifacts)
         energy_life.render(pacman)
