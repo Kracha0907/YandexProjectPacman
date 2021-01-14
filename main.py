@@ -10,17 +10,21 @@ from artifacts_rend import ArtifactsRender
 
 
 class GameLevel:
-    def __init__(self):
-        self.pacman = None
+    def __init__(self, pacman_coords, ghost_coords, artifacts_count, name_map):
+        self.pacman_coords = pacman_coords
+        self.ghost_coords = ghost_coords
+        self.artifacts_count = artifacts_count
+        self.name_map = name_map
 
     def main(self):
         pygame.init()
         screen = pygame.display.set_mode(WINDOW_SIZE)
         all_sprites = pygame.sprite.Group()
 
-        labyrinth = Labyrinth("map.txt", ['0', '2', 'E', 'A'], '2', all_sprites)
-        pacman = Pacman((6, 6), labyrinth, all_sprites)
-        ghost = Ghost((1, 1), labyrinth, all_sprites)
+        labyrinth = Labyrinth(self.name_map, ['0', '2', 'E', 'A'], '2', all_sprites)
+        self.pacman = Pacman(self.pacman_coords, labyrinth, all_sprites)
+        self.pacman.artifacts = self.artifacts_count
+        ghost = Ghost(self.ghost_coords, labyrinth, all_sprites)
         game = Game(labyrinth, self.pacman, ghost)
         energy_life = EnergyLife(screen, self.pacman)
         artifacts_rend = ArtifactsRender(screen, 0)
@@ -60,4 +64,5 @@ class GameLevel:
                 break
             pygame.display.flip()
             clock.tick(FPS)
+            self.artifacts_count = self.pacman.artifacts
         pygame.quit()
