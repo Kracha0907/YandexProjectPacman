@@ -16,10 +16,11 @@ class GameLevel:
     def main(self):
         pygame.init()
         screen = pygame.display.set_mode(WINDOW_SIZE)
+        all_sprites = pygame.sprite.Group()
 
-        labyrinth = Labyrinth("map.txt", ['0', '2', 'E', 'A'], '2')
-        self.pacman = Pacman((6, 6), labyrinth)
-        ghost = Ghost((1, 1), labyrinth)
+        labyrinth = Labyrinth("map.txt", ['0', '2', 'E', 'A'], '2', all_sprites)
+        pacman = Pacman((6, 6), labyrinth, all_sprites)
+        ghost = Ghost((1, 1), labyrinth, all_sprites)
         game = Game(labyrinth, self.pacman, ghost)
         energy_life = EnergyLife(screen, self.pacman)
         artifacts_rend = ArtifactsRender(screen, 0)
