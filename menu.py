@@ -6,6 +6,7 @@ from config import *
 from tkinter import *
 from playsound import playsound
 from threading import Thread
+import highscores
 from scene_manager import Scene_manager
 
 root = Tk()
@@ -16,6 +17,13 @@ def start_game():
     root.destroy()
     s = Scene_manager()
     s.scenes_loop()
+    root = Tk()
+    Button_game()
+
+def records():
+    global root
+    root.destroy()
+    highscores.make_highscores()
     root = Tk()
     Button_game()
 
@@ -39,7 +47,7 @@ def Button_game():
     start_button.place(x=650, y=250)
 
     records_button = Button(text="Records", background="#D2691E", foreground="#000000", padx="14", pady="7", font="13",
-                            width="13")
+                            width="13", command=records)
     records_button.place(x=650, y=350)
 
     end_button = Button(text="Quit", background="#D2691E", foreground="#000000", padx="14", pady="7", font="13",
