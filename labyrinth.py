@@ -1,7 +1,7 @@
 import pygame
 import os
 
-from config import TILE_SIZE, sprites_folder
+from config import TILE_SIZE, sprites_folder, game_folder, map_folder
 
 
 class Labyrinth(pygame.sprite.Sprite):
@@ -17,7 +17,7 @@ class Labyrinth(pygame.sprite.Sprite):
     def __init__(self, filename, free_tiles, finish_tile, group):
         super().__init__(group)
         self.map = []
-        with open(f"{filename}") as input_file:
+        with open(os.path.join(map_folder, filename)) as input_file:
             for line in input_file:
                 self.map.append(list(map(str, line.split())))
                 print(self.map)
