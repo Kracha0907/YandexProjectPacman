@@ -1,6 +1,10 @@
 # from scenes.game_lvl1 import GameLevel as g1
-from main import GameLevel as g1
+from main import GameLevel
 from zastavka import *
+
+game_data = {"pacman_coords": [(1, 1), (1, 25), (1, 1), (12, 1)],
+             "ghost_coords": [(10, 6), (1, 11), (7, 8), (12, 7)],
+             "map_name": ["map1.txt", "map2.txt", "map3.txt", "map4.txt"]}
 
 
 def update_file(score):
@@ -12,22 +16,22 @@ def update_file(score):
 
 class Scene_manager():
     def __init__(self):
-        self.all_scenes = [g1]
-        self.e = ''
-        self.a = 0
+        self.artifacts = 0
 
     def scenes_loop(self):
         pygame.init()
         pygame.font.init()
         n = 1
         story_tell(n)
-        for i in self.all_scenes:
+        for i in range(4):
             n += 1
-            game = i()
+            game = GameLevel(game_data["pacman_coords"][i], game_data["ghost_coords"][i], self.artifacts,
+                             game_data["map_name"][i])
             game.main()
             if game.pacman.health <= 0:
                 break
             story_tell(n)
-        update_file(self.a) # Сохранение счета
+            self.artifacts = game.artifacts_count
+        update_file(self.artifacts) # Сохранение счета
         pygame.time.delay(100)
         pygame.quit()
