@@ -5,13 +5,16 @@ import pygame
 from config import TILE_SIZE, sprites_folder
 
 
-class Pacman:
-    def __init__(self, position, labyrinth):
+class Pacman(pygame.sprite.Sprite):
+    image = pygame.image.load(os.path.join(sprites_folder, "+y_ship"))
+
+    def __init__(self, position, labyrinth, group):
+        super().__init__(group)
         self.x, self.y = position
         self.labyrinth = labyrinth
         #self.center = self.x * TILE_SIZE + TILE_SIZE // 2, self.y * TILE_SIZE + TILE_SIZE // 2
         self.center = self.x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5, self.y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5
-        self.image = pygame.image.load(os.path.join(sprites_folder, "+y_ship"))
+        self.image = Pacman.image
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.check_a = 'up'
         self.check_last = 'up'
