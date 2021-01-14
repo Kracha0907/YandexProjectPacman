@@ -9,52 +9,54 @@ from energy_life import EnergyLife
 from artifacts_rend import ArtifactsRender
 
 
-def main():
-    pygame.init()
-    screen = pygame.display.set_mode(WINDOW_SIZE)
+class GameLevel:
+    def __init__(self):
+        self.pacman = None
 
-    labyrinth = Labyrinth("map.txt", ['0', '2', 'E', 'A'], '2')
-    pacman = Pacman((6, 6), labyrinth)
-    ghost = Ghost((1, 1), labyrinth)
-    game = Game(labyrinth, pacman, ghost)
-    energy_life = EnergyLife(screen, pacman)
-    artifacts_rend = ArtifactsRender(screen, 0)
+    def main(self):
+        pygame.init()
+        screen = pygame.display.set_mode(WINDOW_SIZE)
 
-    clock = pygame.time.Clock()
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    pacman.check_a = 'left'
-                elif event.key == pygame.K_d:
-                    pacman.check_a = 'right'
-                elif event.key == pygame.K_w:
-                    pacman.check_a = 'up'
-                elif event.key == pygame.K_s:
-                    pacman.check_a = 'down'
-        rect_pacman = pacman.x, pacman.y
-        rect_ghost = ghost.x, ghost.y
-        if rect_ghost == rect_pacman and pacman.health > 0:
-            pacman.health -= 20
-        if labyrinth.map[rect_pacman[1]][rect_pacman[0]] == 'E' and pacman.energy < 100:
-            pacman.energy += 20
-            labyrinth.map[rect_pacman[1]][rect_pacman[0]] = '0'
-        if labyrinth.map[rect_pacman[1]][rect_pacman[0]] == 'A' and pacman.energy < 100:
-            pacman.artifacts += 1
-            labyrinth.map[rect_pacman[1]][rect_pacman[0]] = '0'
-        screen.blit(labyrinth.background, (0, 0))
-        pacman.update_hero()
-        ghost.update_hero()
-        game.render(screen)
-        artifacts_rend.render(pacman.artifacts)
-        energy_life.render(pacman)
-        pygame.display.flip()
-        clock.tick(FPS)
-    pygame.quit()
+        labyrinth = Labyrinth("map.txt", ['0', '2', 'E', 'A'], '2')
+        self.pacman = Pacman((6, 6), labyrinth)
+        ghost = Ghost((1, 1), labyrinth)
+        game = Game(labyrinth, self.pacman, ghost)
+        energy_life = EnergyLife(screen, self.pacman)
+        artifacts_rend = ArtifactsRender(screen, 0)
 
-
-if __name__ == "__main__":
-    main()
+        clock = pygame.time.Clock()
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_a:
+                        self.pacman.check_a = 'left'
+                    elif event.key == pygame.K_d:
+                        self.pacman.check_a = 'right'
+                    elif event.key == pygame.K_w:
+                        self.pacman.check_a = 'up'
+                    elif event.key == pygame.K_s:
+                        self.pacman.check_a = 'down'
+            rect_pacman = self.pacman.x, self.pacman.y
+            rect_ghost = ghost.x, ghost.y
+            if rect_ghost == rect_pacman and self.pacman.health > 0:
+                self.pacman.health -= 20
+            if labyrinth.map[rect_pacman[1]][rect_pacman[0]] == 'E' and self.pacman.energy < 100:
+                self.pacman.energy += 20
+                labyrinth.map[rect_pacman[1]][rect_pacman[0]] = '0'
+            if labyrinth.map[rect_pacman[1]][rect_pacman[0]] == 'A' and self.pacman.energy < 100:
+                self.pacman.artifacts += 1
+                labyrinth.map[rect_pacman[1]][rect_pacman[0]] = '0'
+            self.pacman.update_hero()
+            ghost.update_hero()
+            screen.fill((0, 0, 0))
+            game.render(screen)
+            artifacts_rend.render(self.pacman.artifacts)
+            energy_life.render(self.pacman)
+            if self.pacman.energy >= 100 or self.pacman.health <= 0:
+                break
+            pygame.display.flip()
+            clock.tick(FPS)
+        pygame.quit()
