@@ -3,11 +3,12 @@ from config import *
 
 
 pygame.font.init()
+# Отображение количества артифактов за всю игру
 
 
 class ArtifactsRender:
     def __init__(self, screen, value):
-        self.artifacts = value
+        self.artifacts = value # Количество артифактов
         self.screen = screen
 
     def render(self, value=0):
@@ -24,4 +25,3 @@ class ArtifactsRender:
         self.image = pygame.image.load(os.path.join(sprites_folder, "artifact.png")).convert_alpha()
         self.image = pygame.transform.scale(self.image, (70, 70))
         self.screen.blit(self.image, (width - 70 * len(str(self.artifacts)), 85))
- 
