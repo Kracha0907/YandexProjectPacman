@@ -3,6 +3,7 @@ import os
 import pygame
 
 from config import TILE_SIZE, sprites_folder
+# Класс пакмена
 
 
 class Pacman(pygame.sprite.Sprite):
@@ -16,7 +17,7 @@ class Pacman(pygame.sprite.Sprite):
         self.center = [self.x * TILE_SIZE - TILE_SIZE * 8 + TILE_SIZE * 1.5, self.y * TILE_SIZE + TILE_SIZE * 3.5 + TILE_SIZE * 1.5]
         self.image = Pacman.image
         self.image = pygame.transform.scale(self.image, (100, 100))
-        self.check_a = 'up'
+        self.check_a = 'up'  # Хранение направления движения
         self.check_last = 'up'
         self.health = 100
         self.energy = 0
@@ -30,8 +31,8 @@ class Pacman(pygame.sprite.Sprite):
             x, y = self.get_center()
             self.image = pygame.image.load(os.path.join(sprites_folder, sprite))
             self.image = pygame.transform.scale(self.image, (100, 100))
-            self.set_center(x + TILE_SIZE, y - TILE_SIZE)
-            self.check_last = 'up'
+            self.set_center(x + TILE_SIZE, y - TILE_SIZE)  # Смещаем центр
+            self.check_last = 'up'  # Записываем как последнее направление
             return 1
         else:
             return 2
@@ -81,19 +82,19 @@ class Pacman(pygame.sprite.Sprite):
     def update_hero(self):
         next_x, next_y = self.get_position()
         if self.check_a == 'up':
-            go_event = self.go_up("+y_ship")
-            if go_event == 2:
+            go_event = self.go_up("-x_ship")
+            if go_event == 2:  # Обновляем напрваление
                 self.check_a = self.check_last
         elif self.check_a == 'right':
-            go_event = self.go_right("+x_ship")
+            go_event = self.go_right("+y_ship")
             if go_event == 2:
                 self.check_a = self.check_last
         elif self.check_a == 'down':
-            go_event = self.go_down("-y_ship")
+            go_event = self.go_down("+x_ship")
             if go_event == 2:
                 self.check_a = self.check_last
         elif self.check_a == 'left':
-            go_event = self.go_left("-x_ship")
+            go_event = self.go_left("-y_ship")
             if go_event == 2:
                 self.check_a = self.check_last
 
@@ -110,5 +111,4 @@ class Pacman(pygame.sprite.Sprite):
         self.center = [x, y]
 
     def render(self, screen):
-        #pygame.draw.circle(screen, (255, 255, 255), self.center, TILE_SIZE // 4)
         screen.blit(self.image, self.center)
