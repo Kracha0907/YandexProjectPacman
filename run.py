@@ -1,13 +1,12 @@
-import sys
 import pygame
-
 from menu import *
+# Запуск игры
 
 
 def main():
     pygame.init()
     pygame.font.init()
-    Button_game()
+    Button_game()  # Переходим в главное меню
     sys.exit(0)
 
 
