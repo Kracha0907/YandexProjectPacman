@@ -49,6 +49,8 @@ class GameLevel:
         camera = Camera()
         energy_life = EnergyLife(screen, self.pacman)
         artifacts_rend = ArtifactsRender(screen, 0)
+        rect_pacman_last = 0, 0
+        rect_ghost_last = 0, 0
 
         clock = pygame.time.Clock()
         run = True
@@ -69,6 +71,10 @@ class GameLevel:
             rect_ghost = ghost.x, ghost.y
             if rect_ghost == rect_pacman and self.pacman.health > 0:
                 self.pacman.health -= 20
+            elif rect_pacman == rect_ghost_last and rect_ghost == rect_pacman_last and pacman.health > 0:
+                pacman.health -= 20
+            rect_pacman_last = rect_pacman
+            rect_ghost_last = rect_ghost
             if labyrinth.map[rect_pacman[1]][rect_pacman[0]] == 'E' and self.pacman.energy < 100:
                 self.pacman.energy += 20
                 labyrinth.map[rect_pacman[1]][rect_pacman[0]] = '0'
