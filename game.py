@@ -1,10 +1,12 @@
 class Game:
-    def __init__(self, labyrinth, hero, ghost):
+    def __init__(self, labyrinth, hero, ghosts):
         self.labyrinth = labyrinth
         self.hero = hero
-        self.ghost = ghost
+        self.ghosts = ghosts
 
     def render(self, screen):
+        # Отрисовка всех спрайтов игры
         self.labyrinth.render(screen)
         self.hero.render(screen)
-        self.ghost.render(screen)
+        for i in self.ghosts:
+            i.render(screen)
