@@ -9,9 +9,11 @@ from pacman import Pacman
 
 class Ghost(Pacman):
     image = pygame.image.load(os.path.join(sprites_folder, "приведение_вверх.png"))
+
     def __init__(self, position, labyrinth, group):
         super().__init__(position, labyrinth, group)
         self.image = Ghost.image
+
 
     def update_hero(self):
         next_x, next_y = self.get_position()
