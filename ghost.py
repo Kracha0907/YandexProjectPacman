@@ -3,7 +3,7 @@ import os
 import pygame
 import random
 
-from config import sprites_folder
+from config import sprites_folder, TILE_SIZE
 from pacman import Pacman
 
 
@@ -13,6 +13,8 @@ class Ghost(Pacman):
     def __init__(self, position, labyrinth, group):
         super().__init__(position, labyrinth, group)
         self.image = Ghost.image
+        self.center = [self.x * TILE_SIZE - TILE_SIZE * 3 + TILE_SIZE * 1.5,
+                       self.y * TILE_SIZE - TILE_SIZE * 1.5 + TILE_SIZE * 1.5]
 
 
     def update_hero(self):
