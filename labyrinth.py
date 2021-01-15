@@ -4,6 +4,9 @@ import os
 from config import TILE_SIZE, sprites_folder, game_folder, map_folder
 
 
+# Класс поля
+
+
 class Labyrinth(pygame.sprite.Sprite):
     image_back = pygame.image.load(os.path.join(sprites_folder, "back.jpg"))
     image_wall = pygame.image.load(os.path.join(sprites_folder, "download"))
@@ -16,7 +19,8 @@ class Labyrinth(pygame.sprite.Sprite):
 
     def __init__(self, filename, free_tiles, finish_tile, group):
         super().__init__(group)
-        self.map = []
+        self.map = []  # Массив символов поля
+        # Чтение карты
         with open(os.path.join(map_folder, filename)) as input_file:
             for line in input_file:
                 self.map.append(list(map(str, line.split())))
@@ -25,8 +29,8 @@ class Labyrinth(pygame.sprite.Sprite):
         self.center = [0, 0]
         self.height = len(self.map)
         self.width = len(self.map[0])
-        self.tile_size = TILE_SIZE
-        self.free_tiles = free_tiles
+        self.tile_size = TILE_SIZE  # Размер клетки
+        self.free_tiles = free_tiles  # Типы клеток, использующиеся на карте
         self.finish_tile = finish_tile
 
     def render(self, screen):
@@ -57,8 +61,8 @@ class Labyrinth(pygame.sprite.Sprite):
             w -= TILE_SIZE
         self.check = 1
 
-    def get_tile_id(self, position):
+    def get_tile_id(self, position):  # Возвращает элемент массива клеток с заданными индексами
         return self.map[position[1]][position[0]]
 
-    def is_free(self, position):
+    def is_free(self, position):  # Определяет знакомый ли это тип клетки
         return self.get_tile_id(position) in self.free_tiles
