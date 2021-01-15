@@ -2,8 +2,8 @@
 from main import GameLevel
 from zastavka import *
 
-game_data = {"pacman_coords": [(1, 1), (1, 25), (1, 1), (12, 1)],
-             "ghost_coords": [(10, 6), (1, 11), (7, 8), (12, 7)],
+game_data = {"pacman_coords": [(6, 6), (6, 6), (6, 6), (6, 6)],
+             "ghost_coords": [(1, 1), (1, 1), (1, 1), (1, 1)],
              "map_name": ["map1.txt", "map2.txt", "map3.txt", "map4.txt"]}
 
 
