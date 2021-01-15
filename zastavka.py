@@ -5,7 +5,7 @@ from os import path
 from config import *
 
 
-def story_tell(n):
+def story_tell(n):  # Показывание катсцены после уровня
     img_dir = os.path.join(path.dirname(__file__), 'sprites')
     WIDTH = 1500
     HEIGHT = 843
@@ -16,14 +16,16 @@ def story_tell(n):
     running = 0
     if n == 1:
         t = "fon1.jpg"
-    elif n ==2:
+    elif n == 2:
         t = "fon2.jpg"
-    elif n ==3:
+    elif n == 3:
         t = "fon3.jpg"
-    elif n ==4:
+    elif n == 4:
         t = "fon4.jpg"
-    elif n ==5:
+    elif n == 5:
         t = "fon5.jpg"
+    elif n == -1:
+        t = "game-over.jpg"
     while running <= 5:
         screen.fill(BLACK)
         background = pygame.image.load(os.path.join(img_dir, t)).convert()
@@ -32,4 +34,3 @@ def story_tell(n):
         pygame.display.flip()
         time.sleep(1)
         running = running + 1
-    # pygame.quit()
