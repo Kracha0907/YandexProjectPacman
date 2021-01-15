@@ -31,26 +31,30 @@ class Labyrinth(pygame.sprite.Sprite):
 
     def render(self, screen):
         colors = {'0': (0, 0, 0), '1': (100, 100, 255), '2': (230, 60, 60)}
+        w = 0
         for y in range(self.height):
+            h = 0
             for x in range(self.width):
                 rect = pygame.Rect(x * self.tile_size, y * self.tile_size,
                                    self.tile_size, self.tile_size)
                 if self.get_tile_id((x, y)).isdigit():
                     if self.get_tile_id((x, y)) == '1':
-                        self.center_wall = [x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 2 + self.center[0],
-                                            y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 2 + self.center[1]]
+                        self.center_wall = [x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 2 + self.center[0] + w,
+                                            y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 2 + self.center[1] + h]
                         self.image = Labyrinth.image_wall
                         screen.blit(self.image, self.center_wall)
                 elif self.get_tile_id((x, y)) == 'E':
-                    self.center_energy = [x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[0],
-                                          y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[1]]
+                    self.center_energy = [x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[0] + w,
+                                          y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[1] + h]
                     self.image = Labyrinth.image_energy
                     screen.blit(self.image, self.center_energy)
                 elif self.get_tile_id((x, y)) == 'A':
-                    self.center_artyfact = [x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[0],
-                                            y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[1]]
+                    self.center_artyfact = [x * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[0] + w,
+                                            y * TILE_SIZE - TILE_SIZE * 2 + TILE_SIZE * 1.5 + self.center[1] + h]
                     self.image = Labyrinth.image_artifact
                     screen.blit(self.image, self.center_artyfact)
+                h += TILE_SIZE
+            w -= TILE_SIZE
         self.check = 1
 
     def get_tile_id(self, position):
