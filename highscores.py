@@ -12,17 +12,22 @@ def add_highscore():
     global arr_scores
     arr_scores = []
     data = open('scores_info.txt', 'r').read().splitlines()
-    data = [int(_) for _ in data]
+    try:
+        data = [int(_) for _ in data]
+    except:
+        arr_scores = []
     data = sorted(data, reverse=True)
-    for _ in range(1, len(data)+1):
+    for _ in range(1, len(data) + 1):
         i = []
         i.append(_)
-        i.append(data[_-1])
+        i.append(data[_ - 1])
         arr_scores.append(i)
     return arr_scores
 
-current_scores = add_highscore()    #[[1, 99999999], [2, 3345], [3, 45], [4, 0]]
+
+current_scores = add_highscore()  # [[1, 99999999], [2, 3345], [3, 45], [4, 0]]
 counter = 0
+
 
 class ScoreLine(Frame):
     def __init__(self, rank, score):
@@ -73,38 +78,38 @@ class HighScoresApp(Tk):
                 exit('ranks count error')
         super().__init__()
         self.title('HIGHSCORES TABLE')
-        #self.height = (self.winfo_screenwidth()-self.winfo_width())/2
-        #self.width = (self.winfo_screenheight()-self.winfo_height())/2
-        #self.geometry("500x200+%d+%d" % (self.height, self.width))
+        # self.height = (self.winfo_screenwidth()-self.winfo_width())/2
+        # self.width = (self.winfo_screenheight()-self.winfo_height())/2
+        # self.geometry("500x200+%d+%d" % (self.height, self.width))
         self.geometry("500x200")
 
         self.f_main = Frame(self, bg='navy')
-        #self.f_controls = Frame(self.f_main, bg='DarkGray')
+        # self.f_controls = Frame(self.f_main, bg='DarkGray')
 
-        #background_image = PhotoImage(file="bg.gif")
-        #background = Label(root, image=background_image, bd=0)
-        #background.pack()
+        # background_image = PhotoImage(file="bg.gif")
+        # background = Label(root, image=background_image, bd=0)
+        # background.pack()
 
         self.f_scores = Frame(self.f_main, bg='gray')
         in_rank = StringVar()
         in_score = StringVar()
-        #self.f_input = Frame(self.f_controls, bg='SkyBlue4')
-        #self.l_rank = Label(self.f_input, bg='black', fg='white', text='RANK:')
-        #self.l_score = Label(self.f_input, bg='black', fg='white', text='SCORE:')
-        #self.e_rank = Entry(self.f_input, textvariable=in_rank)
-        #self.e_score = Entry(self.f_input, textvariable=in_score)
-        #self.b_new = Button(self.f_controls, text='new', command=self.new_score)
-        #elf.b_del = Button(self.f_controls, text='del', command=self.del_score)
+        # self.f_input = Frame(self.f_controls, bg='SkyBlue4')
+        # self.l_rank = Label(self.f_input, bg='black', fg='white', text='RANK:')
+        # self.l_score = Label(self.f_input, bg='black', fg='white', text='SCORE:')
+        # self.e_rank = Entry(self.f_input, textvariable=in_rank)
+        # self.e_score = Entry(self.f_input, textvariable=in_score)
+        # self.b_new = Button(self.f_controls, text='new', command=self.new_score)
+        # elf.b_del = Button(self.f_controls, text='del', command=self.del_score)
 
         self.f_main.pack(side=TOP, fill=BOTH, expand=True)
-        #self.f_controls.pack(side=TOP, fill=X)
-        #self.b_new.pack(side=LEFT)
-        #self.b_del.pack(side=LEFT)
-        #self.f_input.pack(side=LEFT)
-        #self.l_rank.pack(side=LEFT)
-        #self.e_rank.pack(side=LEFT)
-        #self.l_score.pack(side=LEFT)
-        #self.e_score.pack(side=LEFT)
+        # self.f_controls.pack(side=TOP, fill=X)
+        # self.b_new.pack(side=LEFT)
+        # self.b_del.pack(side=LEFT)
+        # self.f_input.pack(side=LEFT)
+        # self.l_rank.pack(side=LEFT)
+        # self.e_rank.pack(side=LEFT)
+        # self.l_score.pack(side=LEFT)
+        # self.e_score.pack(side=LEFT)
         self.f_scores.pack(side=TOP, fill=BOTH, expand=True)
 
     def new_score(self):
@@ -156,8 +161,8 @@ class HighScoresApp(Tk):
         global counter
         counter = 0
         for _ in range(len(tmp)):
-            ranks[_] = (_+1, tmp[_])
-            rank_frames[_] = ScoreLine(_+1, tmp[_])
+            ranks[_] = (_ + 1, tmp[_])
+            rank_frames[_] = ScoreLine(_ + 1, tmp[_])
             counter += 1
 
 
@@ -168,10 +173,10 @@ def make_highscores():
     hs.mainloop()
     return hs
 
-#make_highscores()
-#hs = HighScoresApp(current_scores)
-#init_gen()
-#hs.mainloop()
+# make_highscores()
+# hs = HighScoresApp(current_scores)
+# init_gen()
+# hs.mainloop()
 
-#update_file(4534535)
-#print(add_highscore())
+# update_file(4534535)
+# print(add_highscore())
