@@ -5,7 +5,7 @@ from zastavka import *
 game_data = {"pacman_coords": [(6, 6), (6, 6), (6, 6), (6, 6)],
              "ghost_coords": [[(1, 1), (1, 1), (1, 1), (1, 1), (1, 1)], [(1, 1), (1, 1), (1, 1)], [(1, 1), (1, 1), (1, 1), (1, 1), (1, 1)],
                               [(1, 1), (1, 1), (1, 1)]],
-             "map_name": ["map4.txt", "map4.txt", "map4.txt", "map4.txt"]}
+             "map_name": ["map1.txt", "map2.txt", "map3.txt", "map4.txt"]}
 
 
 def update_file(score):  # Обновление файла
